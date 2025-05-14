@@ -1,0 +1,40 @@
+{
+  "tipo": "ventas_empresariales",
+  "secciones": {
+    "Datos de Contacto": [
+      "Nombre",
+      "Teléfono",
+      "Sitio Web",
+      "Teléfono 2",
+      "Teléfono 3",
+      "Teléfono 4",
+      "Teléfono 5",
+      "Teléfono 6",
+      "Teléfono 7"
+    ],
+    "Ubicación y Categoría": [
+      "Dirección",
+      "Categoría",
+      "Rating",
+      "Maps URL",
+      "Latitud",
+      "Longitud"
+    ],
+    "Contacto Profesional": [
+      "Perfil Detectado",
+      "Cargo Detectado",
+      "LinkedIn URL",
+      "Contacto (correo o teléfono)",
+      "Confirmado en Empresa"
+    ],
+    "Tipificación y Comentarios": [
+      "Nivel 1",
+      "Nivel 2",
+      "Nivel 3",
+      "Nivel 4",
+      "Nivel 5",
+      "Nivel 6",
+      "Comentario"
+    ]
+  }
+}

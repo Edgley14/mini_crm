@@ -1,0 +1,99 @@
+<!-- layout.html - Dashboard principal con menú lateral -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talk CRM - Panel</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      font-family: Arial, sans-serif;
+    }
+    .sidebar {
+      width: 240px;
+      background-color: #2c3e50;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      transition: width 0.3s ease;
+    }
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+      display: block;
+      padding: 8px;
+      border-radius: 6px;
+    }
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+    .toggle-btn {
+      position: absolute;
+      top: 10px;
+      left: 250px;
+      background-color: #3498db;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .main {
+      flex: 1;
+      padding: 20px;
+      background: #ecf0f1;
+    }
+    iframe {
+      width: 100%;
+      height: calc(100vh - 40px);
+      border: none;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar" id="sidebar">
+    <h2>📋 Talk CRM</h2>
+    <a href="#" onclick="cargar('index.html')">🏠 Inicio</a>
+    <a href="#" onclick="cargar('campañas/campañas-lista.html')">📂 Ver campañas</a>
+    <a href="#" onclick="cargar('campañas/campañas.html')">➕ Nueva campaña</a>
+    <a href="#" onclick="cargar('usuarios/usuarios.html')">👥 Usuarios</a>
+    <a href="#" onclick="cargar('telefonia/extensiones.html')">📞 Extensiones</a>
+    <a href="#" onclick="cargar('telefonia/ivr.html')">🎛️ IVR</a>
+    <a href="#" onclick="cargar('telefonia/troncales.html')">🌐 Troncales</a>
+    <a href="#" onclick="cargar('chat/chat.html')">💬 Chat Interno</a>
+    <a href="#" onclick="logout()">🔒 Cerrar sesión</a>
+  </div>
+
+  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+  <div class="main">
+    <iframe id="visor" src="index.html"></iframe>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.style.width = sidebar.style.width === '60px' ? '240px' : '60px';
+    }
+
+    function cargar(pagina) {
+      document.getElementById('visor').src = pagina;
+    }
+
+    function logout() {
+      alert('Implementar cierre de sesión con Firebase');
+    }
+  </script>
+</body>
+</html>
+

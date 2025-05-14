@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor de Campañas – Talk CRM</title>
+
+  <!-- Tailwind CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  >
+  <style>
+    /* Evita scroll horizontal */
+    html, body { width:100vw; overflow-x:hidden; }
+  </style>
+</head>
+<body class="bg-gray-100 text-black">
+  <!-- Volver al inicio -->
+  <div class="p-4">
+    <button
+      onclick="window.location.href='/index.html'"
+      class="text-blue-600 hover:underline"
+    >
+      ← Volver al inicio
+    </button>
+  </div>
+
+  <main class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Bloque 1: Editor -->
+    <section class="bg-white p-4 rounded shadow space-y-4">
+      <h2 class="text-xl font-semibold">✏️ Editor de Campañas</h2>
+
+      <form id="form-campana" class="bg-white p-4 rounded shadow space-y-4" onsubmit="event.preventDefault()">
+        <!-- Nombre + Tipo -->
+        <input
+          id="nombre" type="text"
+          placeholder="Nombre de la campaña"
+          class="input input-bordered w-full"
+        />
+        <select id="tipo" class="input input-bordered w-full">
+          <option value="Entrante">Entrante (Voz)</option>
+          <option value="Saliente">Saliente (Voz)</option>
+          <option value="WhatsApp">WhatsApp</option>
+        </select>
+
+        <!-- Campos Entrante -->
+        <div id="voz-entrante-campos" class="space-y-2">
+          <input id="email" type="text" placeholder="Correo notificación" class="input input-bordered w-full" />
+          <input id="caller_id" type="text" placeholder="DID / Caller ID" class="input input-bordered w-full" />
+          <select id="estrategia" class="input input-bordered w-full">
+            <option value="">Estrategia</option>
+            <option>ringall</option>
+            <option>leastrecent</option>
+            <option>fewestcalls</option>
+            <option>random</option>
+            <option>rrmemory</option>
+            <option>linear</option>
+            <option>wrandom</option>
+          </select>
+          <select id="ivr_asociado" class="input input-bordered w-full">
+            <option value="">Seleccionar IVR / Flujo</option>
+          </select>
+          <select id="bienvenida_audio" class="input input-bordered w-full">
+            <option value="">Audio Bienvenida</option>
+          </select>
+          <select id="espera_audio" class="input input-bordered w-full">
+            <option value="">Audio Espera</option>
+          </select>
+        </div>
+
+        <!-- Campos Saliente -->
+        <div id="voz-saliente-campos" class="space-y-2 hidden">
+          <input id="email2" type="text" placeholder="Correo notificación" class="input input-bordered w-full" />
+          <input id="caller_id2" type="text" placeholder="DID / Caller ID" class="input input-bordered w-full" />
+          <select id="estrategia2" class="input input-bordered w-full">
+            <option value="">Estrategia</option>
+            <option>ringall</option>
+            <option>leastrecent</option>
+            <option>fewestcalls</option>
+            <option>random</option>
+            <option>rrmemory</option>
+            <option>linear</option>
+            <option>wrandom</option>
+          </select>
+          <input id="cadena_marcado" type="text" placeholder="Cadena de Marcado" class="input input-bordered w-full" />
+          <input id="reintento" type="number" placeholder="Reintentos" class="input input-bordered w-full" />
+          <select id="bienvenida_audio2" class="input input-bordered w-full">
+            <option value="">Audio Bienvenida</option>
+          </select>
+          <select id="espera_audio2" class="input input-bordered w-full">
+            <option value="">Audio Espera</option>
+          </select>
+        </div>
+
+        <!-- Campos Comunes -->
+        <div id="voz-comunes" class="space-y-2">
+          <div class="grid grid-cols-3 gap-2">
+            <input id="wrap_up" type="number" placeholder="Wrap Up Time" class="input input-bordered w-full" />
+            <input id="ringing" type="number" placeholder="Ringing Time" class="input input-bordered w-full" />
+            <input id="timeout" type="number" placeholder="Dial Timeout" class="input input-bordered w-full" />
+          </div>
+        </div>
+
+        <!-- Campos WhatsApp -->
+        <div id="whatsapp-campos" class="space-y-2 hidden">
+          <select id="rompehielos" class="input input-bordered w-full">
+            <option value="">Seleccionar Rompehielo</option>
+          </select>
+          <select id="bot_asociado" class="input input-bordered w-full">
+            <option value="">Seleccionar Bot</option>
+          </select>
+          <input id="numero_origen" type="text" placeholder="Número Origen WhatsApp" class="input input-bordered w-full" />
+          <input id="flujo_asociado_wh" type="text" placeholder="Flujo asociado" class="input input-bordered w-full" />
+          <select id="proveedor_whatsapp" class="input input-bordered w-full">
+            <option value="">Proveedor</option>
+            <option value="meta">Meta</option>
+            <option value="gupshup">Gupshup</option>
+            <option value="twilio">Twilio</option>
+          </select>
+          <div>
+            <h3 class="font-semibold">🎯 Lista de Rompehielos</h3>
+            <div id="rompehielos-list" class="space-y-2 mt-2"></div>
+            <div class="flex gap-2 mt-3">
+              <input id="nuevo-rompehielo" placeholder="Nuevo rompehielos..." class="input input-bordered flex-1" />
+              <button id="btn-agregar-rompehielos" type="button" class="bg-blue-600 text-white px-4 py-1 rounded">Agregar Rompehielos</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horarios -->
+        <div class="space-y-2">
+          <label class="block font-semibold">Horarios</label>
+          <div id="bloques-horario" class="space-y-2"></div>
+          <button
+            type="button"
+            onclick="agregarBloqueHorario()"
+            class="bg-blue-500 text-white px-3 py-1 rounded"
+          >
+            + Agregar Horario
+          </button>
+        </div>
+
+        <!-- SIP Trunk -->
+        <div>
+          <select id="sip_trunk_select" class="input input-bordered w-full">
+            <option value="">Seleccionar SIP Trunk</option>
+          </select>
+        </div>
+
+        <!-- Transferibles -->
+        <div>
+          <label class="block font-semibold">Campañas Transferibles</label>
+          <textarea
+            id="transferencias" rows="2"
+            placeholder="Ej: soporte,ventas"
+            class="input input-bordered w-full"
+          ></textarea>
+        </div>
+
+        <!-- Acciones -->
+        <div class="flex gap-4">
+          <button id="btn-guardar" type="button" class="bg-green-600 text-white px-4 py-2 rounded">
+            Guardar Campaña
+          </button>
+          <button
+            type="reset"
+            class="bg-gray-400 text-white px-4 py-2 rounded"
+          >
+            Limpiar
+          </button>
+          <button id="btn-eliminar" type="button" class="bg-red-600 text-white px-4 py-2 rounded">
+            Eliminar
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Bloque 2: Lista -->
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-semibold mb-2">📋 Campañas existentes</h2>
+      <ul id="lista-campanas" class="text-sm space-y-1"></ul>
+    </section>
+
+    <!-- Bloque 3: Asignar agentes -->
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-semibold mb-4">👥 Asignar Agentes</h2>
+      <select id="campana-select" class="input input-bordered w-full mb-4"></select>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-semibold mb-1">Disponibles</h3>
+          <ul id="agentes-disponibles"
+              class="bg-gray-50 border p-2 rounded min-h-[150px] space-y-1"></ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-1">Asignados</h3>
+          <ul id="agentes-asignados"
+              class="bg-gray-50 border p-2 rounded min-h-[150px] space-y-1"></ul>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button id="btn-asignar" class="bg-green-500 text-white px-4 py-1 rounded">
+          Asignar
+        </button>
+        <button id="btn-desasignar" class="bg-red-500 text-white px-4 py-1 rounded">
+          Desasignar
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- UI: Horarios dinámicos -->
+  <script>
+    const diasSemana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+    function agregarBloqueHorario() {
+      const cont = document.getElementById("bloques-horario");
+      const div = document.createElement("div");
+      div.className = "bg-gray-100 p-2 rounded flex flex-wrap items-center gap-2";
+      div.innerHTML = `
+        <div class="flex flex-wrap gap-2 w-full">
+          ${diasSemana.map(d =>
+            `<label class="text-sm flex items-center">
+               <input type="checkbox" value="${d}" class="mr-1"/>${d}
+             </label>`
+          ).join('')}
+        </div>
+        <span class="text-sm">De:</span>
+        <input type="time" class="input input-bordered"/>
+        <span class="text-sm">a:</span>
+        <input type="time" class="input input-bordered"/>
+        <button type="button" onclick="this.parentElement.remove()"
+                class="text-red-600 text-xs ml-2">Eliminar</button>
+      `;
+      cont.appendChild(div);
+    }
+
+    // Mostrar/ocultar campos según tipo
+    document.getElementById('tipo').addEventListener('change', e => {
+      const t = e.target.value;
+      document.getElementById('voz-entrante-campos').classList.toggle('hidden', t!=='Entrante');
+      document.getElementById('voz-saliente-campos').classList.toggle('hidden', t!=='Saliente');
+      document.getElementById('voz-comunes').classList.toggle('hidden', t==='WhatsApp');
+      document.getElementById('whatsapp-campos').classList.toggle('hidden', t!=='WhatsApp');
+    });
+  </script>
+
+  <!-- Módulo de UI: enganchar eventos -->
+  <script type="module" src="../scripts/campanas-ui.js"></script>
+</body>
+</html>

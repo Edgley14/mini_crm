@@ -1,0 +1,12 @@
+[
+  {
+    "nombre": "Soporte Tigo",
+    "canal": "voz",
+    "tipo": "entrante",
+    "activa": true,
+    "agentes": ["usuario1@gmail.com"],
+    "horarios": [
+      { "dia": "Lunes", "desde": "08:00", "hasta": "18:00" }
+    ]
+  }
+]

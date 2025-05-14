@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff;
+      padding: 0.5rem;
+      overflow: hidden;
+    }
+
+    .info-campaña {
+      font-size: 0.85rem;
+      text-align: center;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    #numberDisplay {
+      width: 100%;
+      padding: 6px;
+      font-size: 1rem;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .dialpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .dialpad button,
+    .call-buttons button {
+      font-size: 0.9rem;
+      padding: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #e8f0fe;
+      cursor: pointer;
+    }
+
+    .dialpad button:hover,
+    .call-buttons button:hover {
+      background-color: #d2e3fc;
+    }
+
+    .call-buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .call-buttons button {
+      padding: 6px 0;
+    }
+  </style>
+</head>
+<body>
+
+
+  <input type="text" id="numberDisplay" disabled />
+
+  <div class="dialpad">
+    <button onclick="appendNumber('1')">1</button>
+    <button onclick="appendNumber('2')">2</button>
+    <button onclick="appendNumber('3')">3</button>
+    <button onclick="appendNumber('4')">4</button>
+    <button onclick="appendNumber('5')">5</button>
+    <button onclick="appendNumber('6')">6</button>
+    <button onclick="appendNumber('7')">7</button>
+    <button onclick="appendNumber('8')">8</button>
+    <button onclick="appendNumber('9')">9</button>
+    <button onclick="appendNumber('*')">*</button>
+    <button onclick="appendNumber('0')">0</button>
+    <button onclick="appendNumber('#')">#</button>
+  </div>
+
+  <div class="call-buttons">
+    <button title="Llamar" onclick="startCall()">📞</button>
+    <button title="Mute" onclick="muteCall()">🔇</button>
+    <button title="Hold" onclick="holdCall()">⏸</button>
+    <button title="Transferir" onclick="transferCall()">🔁</button>
+    <button title="Colgar" onclick="endCall()">❌</button>
+  </div>
+
+  <script>
+    let currentNumber = "";
+
+    function appendNumber(num) {
+      currentNumber += num;
+      document.getElementById("numberDisplay").value = currentNumber;
+    }
+
+    function startCall() {
+      alert("Llamando a " + currentNumber);
+    }
+
+    function muteCall() {
+      alert("Mute activado");
+    }
+
+    function holdCall() {
+      alert("Llamada en espera");
+    }
+
+    function transferCall() {
+      alert("Transferencia iniciada");
+    }
+
+    function endCall() {
+      alert("Llamada finalizada");
+      currentNumber = "";
+      document.getElementById("numberDisplay").value = "";
+    }
+  </script>
+</body>
+</html>

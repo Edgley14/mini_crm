@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Extensiones SIP</title>
+  <script type="module">
+    import { crearExtension } from '../scripts/telefonia.js';
+
+    window.guardarExtension = async () => {
+      const data = {
+        usuario: document.getElementById('usuario').value,
+        extension: document.getElementById('extension').value,
+        password: document.getElementById('password').value,
+        grupo: document.getElementById('grupo').value
+      };
+      await crearExtension(data);
+      alert('Extensión guardada');
+    };
+  </script>
+</head>
+<body>
+  <h2>📞 Crear Extensión SIP</h2>
+  <input id="usuario" placeholder="Nombre del usuario" />
+  <input id="extension" placeholder="Número de extensión" />
+  <input id="password" placeholder="Contraseña SIP" />
+  <input id="grupo" placeholder="Grupo (opcional)" />
+  <button onclick="guardarExtension()">Guardar</button>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>IVR / Flujos</title>
+  <script type="module">
+    import { crearIVR } from '../scripts/telefonia.js';
+
+    window.guardarIVR = async () => {
+      const data = {
+        nombre: document.getElementById('nombre').value,
+        destino: document.getElementById('destino').value,
+        audio: document.getElementById('audio').value,
+        horario: document.getElementById('horario').value
+      };
+      await crearIVR(data);
+      alert('IVR guardado');
+    };
+  </script>
+</head>
+<body>
+  <h2>🎛️ Crear IVR / Flujo</h2>
+  <input id="nombre" placeholder="Nombre del flujo" />
+  <input id="destino" placeholder="Destino (extensión / grupo)" />
+  <input id="audio" placeholder="Nombre del audio de bienvenida" />
+  <input id="horario" placeholder="Horario asociado (ej. 08:00-18:00)" />
+  <button onclick="guardarIVR()">Guardar</button>
+</body>
+</html>

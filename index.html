@@ -1,0 +1,107 @@
+<!-- index.html (CRM visual profesional moderno estilo Google con menú lateral contraíble con estado persistente) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talk CRM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <h2>
+      <span>📂 Menú</span>
+      <div class="sidebar-toggle" onclick="toggleSidebar()">≡</div>
+    </h2>
+    <a href="campanas/campanas.html">📞 <span>Campañas</span></a>
+    <a href="audios.html">📊 <span>audios</span></a>
+    <a href="reportes.html">📊 <span>Reportes</span></a>
+    <a href="flujos.html">📋 <span>Flujos</span></a>
+    <a href="telefonia/extensiones.html">📞 <span>Extensiones</span></a>
+    <a href="telefonia/ivr.html">📞 <span>IVR</span></a>
+  </aside>
+  <main class="main">
+    <div class="header">
+      Talk CRM
+      <div>
+        <strong>Agente:</strong>
+        <span id="usuarioCRM">Cargando...</span>
+        <button id="logout-btn" class="btn-primary" style="margin-left: 1rem;">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div>⏱ <strong>Pausa:</strong> Disponible</div>
+      <div>📶 <strong>Estado:</strong> En línea</div>
+    </div>
+
+    <div class="container">
+      <div>
+        <div class="section">
+          <h3>📋 Ficha CRM</h3>
+          <div id="crm-dinamico"></div>
+          <button class="btn-primary" onclick="guardarGestion()">Guardar Gestión</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section">
+          <h3>📞 Softphone</h3>
+          <iframe src="softphone.html"></iframe>
+        </div>
+        <div class="section">
+          <h3>💬 Chat Interno</h3>
+          <iframe src="chat/chat.html"></iframe>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { auth, onAuthStateChanged } from './scripts/firebase-config.js';
+    import { signOut } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js';
+    import { cargarFormulario, guardarGestion } from './scripts/crm_dynamic.js';
+
+    // Validar que haya sesión iniciada
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      document.getElementById('usuarioCRM').innerText = user.displayName || user.email;
+      localStorage.setItem("usuario", user.email);
+      cargarFormulario("ventas_empresariales", "crm-dinamico");
+    });
+
+    // Cerrar sesión
+    document.getElementById('logout-btn').onclick = () => {
+      signOut(auth).then(() => {
+        localStorage.removeItem("usuario");
+        window.location.href = "login.html";
+      }).catch((error) => {
+        alert("Error cerrando sesión: " + error.message);
+      });
+    };
+
+    // Función de guardado
+    window.guardarGestion = guardarGestion;
+  </script>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const collapsed = sidebar.classList.toggle('collapsed');
+      localStorage.setItem('sidebarCollapsed', collapsed);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const collapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+      if (collapsed) {
+        document.getElementById('sidebar').classList.add('collapsed');
+      }
+    });
+  </script>
+</body>
+</html>

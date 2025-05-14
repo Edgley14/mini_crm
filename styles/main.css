@@ -1,0 +1,315 @@
+:root {
+  --primary: #1a73e8;
+  --bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --text: #202124;
+  --gray: #5f6368;
+  --border: #dadce0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #fff;
+  border-right: 1px solid var(--border);
+  height: 100vh;
+  padding: 1rem;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar h2 span {
+  transition: opacity 0.2s ease;
+}
+
+.sidebar.collapsed h2 span {
+  display: none;
+}
+
+.sidebar a span {
+  transition: opacity 0.2s ease;
+}
+
+.sidebar.collapsed a span {
+  display: none;
+}
+
+.sidebar-toggle {
+  background: none;
+  color: black;
+  width: auto;
+  height: auto;
+  font-size: 20px;
+  line-height: normal;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.sidebar a:hover {
+  background-color: #e8f0fe;
+}
+
+.main {
+  flex: 1;
+}
+
+.header {
+  background-color: var(--primary);
+  color: white;
+  padding: 1rem 2rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-bar {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.75rem 2rem;
+  background-color: #e8f0fe;
+  font-size: 0.95rem;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.section {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary);
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+.niveles span {
+  background: #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 16px;
+  margin-right: 5px;
+  font-size: 0.85rem;
+  cursor: default;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  resize: vertical;
+}
+
+button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ficha-crm-seccion {
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.grid-ficha {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+.campo-ficha {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+}
+.campo-ficha strong {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.campo-ficha a {
+  color: #1a73e8;
+  text-decoration: underline;
+  word-break: break-word;
+}
+.btn-tag {
+  padding: 8px 12px;
+  background: #e8f0fe;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-tag.active {
+  background: #1a73e8;
+  color: white;
+}
+
+/* Estilos para inputs dentro de la ficha CRM */
+.campo-ficha input[type="text"],
+.campo-ficha textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background-color: #fff;
+  color: var(--text);
+  transition: border 0.2s ease-in-out;
+}
+
+.campo-ficha input[type="text"]:focus,
+.campo-ficha textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
+}
+
+/* Estilos para botones dinámicos tipo tags en la ficha CRM */
+.campo-ficha .btn-tag {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #e8f0fe;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.campo-ficha .btn-tag.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Estilo para textarea de comentarios específicos */
+.campo-ficha textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Configurar espaciado adecuado en fichas generadas dinámicamente */
+.ficha-crm-seccion h3 {
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+/* Estilo para el botón principal "Guardar Gestión" */
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #1669c1;
+}
+/* Estilos para select (desplegable) en CRM */
+.campo-ficha select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background-color: #fff;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.campo-ficha select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
+}

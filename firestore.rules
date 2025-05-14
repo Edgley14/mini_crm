@@ -1,0 +1,41 @@
+// firestore.rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Gestiones
+    match /gestiones/{doc} {
+      allow read, write: if request.auth != null;
+    }
+    // Campañas
+    match /campanas/{doc} {
+      // Permitimos lectura pública para poder ver la lista sin login
+      allow read: if true;
+      // Exigimos login para crear o editar
+      allow write: if request.auth != null;
+    }
+    // Rompehielos / bots
+    match /bots/{doc} {
+      allow read, write: if request.auth != null;
+    }
+    // IVRs / flujos
+    match /ivrs/{doc} {
+      allow read, write: if request.auth != null;
+    }
+    // Audios (bienvenida, espera, etc.)
+    match /audios/{doc} {
+      allow read, write: if request.auth != null;
+    }
+    // SIP trunks
+    match /sip_trunks/{doc} {
+      allow read, write: if request.auth != null;
+    }
+    // Usuarios (para la asignación de agentes)
+    match /usuarios/{doc} {
+      allow read, write: if request.auth != null;
+    }
+    // Bloquear todo lo demás
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
