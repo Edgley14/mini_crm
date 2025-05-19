@@ -2,12 +2,10 @@
 import {
   guardarCampana,
   cargarCampanas,
-  mostrarCampanasEnLista,
+  mostrarCampanasEnLista, // Usaremos esta función importada
   obtenerCampana,
   actualizarCampana,
-  eliminarCampana,
-  asignarAgente,
-  desasignarAgente
+  eliminarCampana
 } from './campanas.js';
 import { firestore } from './firebase-config.js';
 import { getDocs, collection } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
@@ -119,42 +117,7 @@ async function handleGuardarCampana() {
 
   alert('✅ Campaña guardada');
   clearForm();
-  await mostrarCampanasEnLista();
-}
-
-// --- Renderizar lista de campañas ---
-async function mostrarCampanasEnLista() {
-  const lista = document.getElementById('lista-campanas');
-  if (!lista) {
-    console.error('No se encontró el elemento #lista-campanas en el DOM');
-    return;
-  }
-  lista.innerHTML = '';
-  try {
-    const campanas = await cargarCampanas();
-    if (!Array.isArray(campanas)) {
-      throw new Error('El resultado de cargarCampanas no es un array.');
-    }
-    if (campanas.length === 0) {
-      lista.innerHTML = '<li class="text-gray-500">No hay campañas registradas.</li>';
-      return;
-    }
-    campanas.forEach(c => {
-      const li = document.createElement('li');
-      li.className = "flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-100";
-      li.innerHTML = `
-        <div>
-          <strong>${c.nombre || '(Sin nombre)'}</strong>
-          <span class="ml-2 text-gray-500">Teléfono: ${c.caller_id || ''}</span>
-        </div>
-      `;
-      li.addEventListener('click', () => editarCampanaUI(c.id));
-      lista.appendChild(li);
-    });
-  } catch (err) {
-    lista.innerHTML = `<li class="text-red-500">Error al cargar campañas: ${err.message}</li>`;
-    console.error('Error en mostrarCampanasEnLista:', err);
-  }
+  mostrarCampanasEnLista();
 }
 
 // --- Editar campaña ---
@@ -228,7 +191,7 @@ async function handleEliminarCampana() {
     await eliminarCampana(editId);
     alert('✅ Campaña eliminada');
     clearForm();
-    mostrarCampanasEnLista();
+    mostrarCampanasEnLista(); // Usamos la función importada
   }
 }
 
@@ -239,10 +202,6 @@ function clearForm() {
   document.getElementById('rompehielos-list').innerHTML = '';
   rompehielosSelec.length = 0;
   editId = null;
-}
-
-function capitalize(s) {
-  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 // --- Inicialización ---
@@ -259,24 +218,16 @@ async function inicializarUI() {
   } catch (e) {
     console.error('Error cargando selects dinámicos:', e);
   }
-  // Mostrar campañas después de cargar los selects
-  mostrarCampanasEnLista();
+  mostrarCampanasEnLista(); // Usamos la función importada
 }
 
 // Llama a la inicialización al cargar el módulo
 inicializarUI();
 
 // --- Exponer funciones globales ---
-window.guardarCampana           = guardarCampana;
-window.cargarCampanas           = cargarCampanas;
-window.mostrarCampanasEnLista   = mostrarCampanasEnLista;
-window.obtenerCampana           = obtenerCampana;
-window.actualizarCampana        = actualizarCampana;
-window.eliminarCampana          = eliminarCampana;
-window.asignarAgente            = asignarAgente;
-window.desasignarAgente         = desasignarAgente;
-window.handleEliminarCampana    = handleEliminarCampana;
-window.clearForm                = clearForm;
+window.guardarCampana = guardarCampana;
+window.handleEliminarCampana = handleEliminarCampana;
+window.clearForm = clearForm;
 
 window.onerror = function(message, source, lineno, colno, error) {
   console.error('Error global:', message, 'en', source, 'línea', lineno, 'col', colno, error);

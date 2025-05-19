@@ -8,28 +8,35 @@ service cloud.firestore {
     }
     // Campañas
     match /campanas/{doc} {
-      // Permitimos lectura pública para poder ver la lista sin login
+      allow read: if true; // Permitir lectura pública
+      allow write: if request.auth != null; // Requiere autenticación para escribir
+    }
+    // Rompehielos
+    match /rompehielos/{doc} {
       allow read: if true;
-      // Exigimos login para crear o editar
       allow write: if request.auth != null;
     }
-    // Rompehielos / bots
+    // Bots
     match /bots/{doc} {
-      allow read, write: if request.auth != null;
+      allow read: if true; // Permitir lectura pública
+      allow write: if request.auth != null;
     }
-    // IVRs / flujos
+    // IVRs
     match /ivrs/{doc} {
-      allow read, write: if request.auth != null;
+      allow read: if true; // Permitir lectura pública
+      allow write: if request.auth != null;
     }
-    // Audios (bienvenida, espera, etc.)
+    // Audios
     match /audios/{doc} {
-      allow read, write: if request.auth != null;
+      allow read: if true; // Permitir lectura pública
+      allow write: if request.auth != null;
     }
     // SIP trunks
     match /sip_trunks/{doc} {
-      allow read, write: if request.auth != null;
+      allow read: if true; // Permitir lectura pública
+      allow write: if request.auth != null;
     }
-    // Usuarios (para la asignación de agentes)
+    // Usuarios
     match /usuarios/{doc} {
       allow read, write: if request.auth != null;
     }
