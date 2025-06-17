@@ -117,6 +117,13 @@ async function handleGuardarCampana() {
         alert('Debes ingresar la cadena de marcado');
         return;
       }
+9mlyt1-codex/validar-y-guardar-campaña-en-una-tarea
+
+      if (!data.sip_trunk_id) {
+        alert('Debes seleccionar un SIP Trunk');
+        return;
+      }
+main
     }
 
     if (editId) {
