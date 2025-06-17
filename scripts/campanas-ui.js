@@ -127,6 +127,7 @@ async function handleGuardarCampana() {
     }
 
 
+
       if (!data.sip_trunk_id) {
         alert('Debes seleccionar un SIP Trunk');
         return;
@@ -141,6 +142,7 @@ main
       await guardarCampana(data);
     }
 
+ main
  main
     alert('✅ Campaña guardada');
     clearForm();
