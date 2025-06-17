@@ -15,7 +15,12 @@ const coleccionCampanas = collection(firestore, 'campanas');
 // Crear nueva campaña
 async function guardarCampana(data) {
   const payload = construirPayloadDesdeFormulario(data);
-  await addDoc(coleccionCampanas, payload);
+  try {
+    await addDoc(coleccionCampanas, payload);
+  } catch (err) {
+    console.error('Error al guardar campaña en Firestore:', err);
+    throw err;
+  }
 }
 
 // Leer todas las campañas
@@ -43,7 +48,12 @@ async function obtenerCampana(id) {
 async function actualizarCampana(id, data) {
   const ref = doc(firestore, 'campanas', id);
   const payload = construirPayloadDesdeFormulario(data);
-  await updateDoc(ref, payload);
+  try {
+    await updateDoc(ref, payload);
+  } catch (err) {
+    console.error('Error al actualizar campaña en Firestore:', err);
+    throw err;
+  }
 }
 
 // Borrar campaña
