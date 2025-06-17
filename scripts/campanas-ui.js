@@ -107,17 +107,32 @@ async function handleGuardarCampana() {
       proveedor: document.getElementById('proveedor_whatsapp').value
     };
   }
+  try {
+    if (!nombre) {
+      alert('El nombre de la campaña es obligatorio');
+      return;
+    }
+    if (tipo === 'Saliente') {
+      if (!data.cadena_marcado) {
+        alert('Debes ingresar la cadena de marcado');
+        return;
+      }
+    }
 
-  if (editId) {
-    await actualizarCampana(editId, data);
-    editId = null;
-  } else {
-    await guardarCampana(data);
+    if (editId) {
+      await actualizarCampana(editId, data);
+      editId = null;
+    } else {
+      await guardarCampana(data);
+    }
+
+    alert('✅ Campaña guardada');
+    clearForm();
+    mostrarCampanasEnLista();
+  } catch (err) {
+    console.error('Error al guardar campaña:', err);
+    alert(`❌ Error al guardar campaña: ${err.message || err}`);
   }
-
-  alert('✅ Campaña guardada');
-  clearForm();
-  mostrarCampanasEnLista();
 }
 
 // --- Editar campaña ---
