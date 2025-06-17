@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <title>Troncales SIP</title>
   <script type="module">
-    import { crearTroncal } from '../scripts/telefonia.js';
+    import { crearSipTrunk } from '../scripts/telefonia.js';
 
-    window.guardarTroncal = async () => {
+    window.guardarSipTrunk = async () => {
       const data = {
         nombre: document.getElementById('nombre').value,
         host: document.getElementById('host').value,
         usuario: document.getElementById('usuario').value,
         password: document.getElementById('password').value
       };
-      await crearTroncal(data);
+      await crearSipTrunk(data);
       alert('Troncal guardada');
     };
   </script>
@@ -24,6 +24,6 @@
   <input id="host" placeholder="Host SIP (ip o dominio)" />
   <input id="usuario" placeholder="Usuario de registro" />
   <input id="password" placeholder="Contraseña" />
-  <button onclick="guardarTroncal()">Guardar</button>
+  <button onclick="guardarSipTrunk()">Guardar</button>
 </body>
 </html>
