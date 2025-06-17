@@ -61,6 +61,7 @@
       padding: 6px 0;
     }
   </style>
+  <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
 </head>
 <body>
 
@@ -90,35 +91,6 @@
     <button title="Colgar" onclick="endCall()">❌</button>
   </div>
 
-  <script>
-    let currentNumber = "";
-
-    function appendNumber(num) {
-      currentNumber += num;
-      document.getElementById("numberDisplay").value = currentNumber;
-    }
-
-    function startCall() {
-      alert("Llamando a " + currentNumber);
-    }
-
-    function muteCall() {
-      alert("Mute activado");
-    }
-
-    function holdCall() {
-      alert("Llamada en espera");
-    }
-
-    function transferCall() {
-      alert("Transferencia iniciada");
-    }
-
-    function endCall() {
-      alert("Llamada finalizada");
-      currentNumber = "";
-      document.getElementById("numberDisplay").value = "";
-    }
-  </script>
+  <script type="module" src="./scripts/softphone.js"></script>
 </body>
 </html>
