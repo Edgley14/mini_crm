@@ -157,7 +157,7 @@ window.editarCampanaUI = async function(id) {
   }
 };
 
-// Renderiza la lista de campañas con botones Editar y Eliminar
+// Renderiza la lista de campañas con enlace en el nombre para editar
 async function mostrarCampanasEnLista() {
   console.log('🔄 mostrando campañas…');
   const lista = document.getElementById('lista-campanas');
@@ -175,20 +175,15 @@ async function mostrarCampanasEnLista() {
       lista.innerHTML = '<li class="text-gray-500">No hay campañas registradas.</li>';
       return;
     }
-    campanas.forEach(c => {
+    campanas.forEach(campana => {
       const li = document.createElement('li');
-      li.className = "flex justify-between items-center border-b py-2";
+      li.className = "border-b py-2";
+      // TODO: Reemplazar botones Editar/Eliminar por clic en nombre de campaña
       li.innerHTML = `
-        <div>
-          <strong>${c.nombre || '(Sin nombre)'}</strong>
-          <span class="text-gray-500">(${c.tipo || '(Sin tipo)'})</span>
-          <span class="text-xs text-gray-400 ml-2">ID: ${c.id || ''}</span>
-        </div>
-        <div>
-          <button onclick="editarCampanaUI('${c.id}')" class="text-blue-500 text-sm hover:underline">Editar</button>
-          <button onclick="eliminarCampanaUI('${c.id}')" class="text-red-500 text-sm hover:underline">Eliminar</button>
-        </div>
-      `;
+  <strong style="cursor:pointer" onclick="editarCampanaUI('${campana.id}')">
+    ${campana.nombre || '(Sin nombre)'} → (${campana.tipo || 'sin tipo'})
+  </strong>
+`;
       lista.appendChild(li);
     });
   } catch (err) {

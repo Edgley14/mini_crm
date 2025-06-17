@@ -209,7 +209,25 @@ async function handleEliminarCampana() {
     alert('❌ No hay ninguna campaña seleccionada para eliminar.');
     return;
   }
-  if (confirm('¿Estás seguro de que deseas eliminar esta campaña?')) {
+mostrarCampanasEnLista(); // Usamos la función importada
+// NOTA: Los campos IVR asociado, audios de bienvenida y espera se muestran solo si tipo === 'Entrante'
+// Los trunks SIP se muestran solo si tipo === 'Saliente'
+// Los datos de WhatsApp (bot, flujo, número, proveedor) se muestran si tipo === 'WhatsApp'
+// Están presentes pero pueden estar vacíos si aún no hay registros en Firestore
+
+// Mostrar campos según el tipo de campaña seleccionado
+document.getElementById("tipo").addEventListener("change", () => {
+  const tipo = document.getElementById("tipo").value.toLowerCase();
+
+  document.getElementById("campos-entrante").style.display =
+    tipo === "entrante" ? "block" : "none";
+  document.getElementById("campos-saliente").style.display =
+    tipo === "saliente" ? "block" : "none";
+  document.getElementById("campos-whatsapp").style.display =
+    tipo === "whatsapp" ? "block" : "none";
+});
+
+  document.getElementById('tipo').dispatchEvent(new Event('change'));
     await eliminarCampana(editId);
     alert('✅ Campaña eliminada');
     clearForm();
