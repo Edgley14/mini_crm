@@ -224,6 +224,13 @@ async function inicializarUI() {
 // Llama a la inicialización al cargar el módulo
 inicializarUI();
 
+// --- Conectar botones del formulario ---
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-guardar')?.addEventListener('click', handleGuardarCampana);
+  document.getElementById('btn-eliminar')?.addEventListener('click', handleEliminarCampana);
+  document.getElementById('btn-agregar-rompehielos')?.addEventListener('click', handleAgregarRompehielos);
+});
+
 // --- Exponer funciones globales ---
 window.guardarCampana = guardarCampana;
 window.handleEliminarCampana = handleEliminarCampana;
