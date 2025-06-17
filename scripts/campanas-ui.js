@@ -117,7 +117,15 @@ async function handleGuardarCampana() {
         alert('Debes ingresar la cadena de marcado');
         return;
       }
-9mlyt1-codex/validar-y-guardar-campaña-en-una-tarea
+    }
+
+    if (editId) {
+      await actualizarCampana(editId, data);
+      editId = null;
+    } else {
+      await guardarCampana(data);
+    }
+
 
       if (!data.sip_trunk_id) {
         alert('Debes seleccionar un SIP Trunk');
@@ -133,6 +141,7 @@ main
       await guardarCampana(data);
     }
 
+ main
     alert('✅ Campaña guardada');
     clearForm();
     mostrarCampanasEnLista();
@@ -240,17 +249,35 @@ async function inicializarUI() {
   } catch (e) {
     console.error('Error cargando selects dinámicos:', e);
   }
-  mostrarCampanasEnLista(); // Usamos la función importada
+mostrarCampanasEnLista(); // Usamos la función importada
 }
 
 // Llama a la inicialización al cargar el módulo
 inicializarUI();
+
+// NOTA: Los campos IVR asociado, audios de bienvenida y espera se muestran solo si tipo === 'Entrante'
+// Los trunks SIP se muestran solo si tipo === 'Saliente'
+// Los datos de WhatsApp (bot, flujo, número, proveedor) se muestran si tipo === 'WhatsApp'
+// Están presentes pero pueden estar vacíos si aún no hay registros en Firestore
+
+// Mostrar campos según el tipo de campaña seleccionado
+document.getElementById("tipo").addEventListener("change", () => {
+  const tipo = document.getElementById("tipo").value.toLowerCase();
+
+  document.getElementById("campos-entrante").style.display =
+    tipo === "entrante" ? "block" : "none";
+  document.getElementById("campos-saliente").style.display =
+    tipo === "saliente" ? "block" : "none";
+  document.getElementById("campos-whatsapp").style.display =
+    tipo === "whatsapp" ? "block" : "none";
+});
 
 // --- Conectar botones del formulario ---
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-guardar')?.addEventListener('click', handleGuardarCampana);
   document.getElementById('btn-eliminar')?.addEventListener('click', handleEliminarCampana);
   document.getElementById('btn-agregar-rompehielos')?.addEventListener('click', handleAgregarRompehielos);
+  document.getElementById('tipo').dispatchEvent(new Event('change'));
 });
 
 // --- Exponer funciones globales ---

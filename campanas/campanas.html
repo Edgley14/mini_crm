@@ -13,6 +13,7 @@
   <style>
     /* Evita scroll horizontal */
     html, body { width:100vw; overflow-x:hidden; }
+    .hidden { display: none; }
   </style>
 </head>
 <body class="bg-gray-100 text-black">
@@ -45,8 +46,8 @@
           <option value="WhatsApp">WhatsApp</option>
         </select>
 
-        <!-- Campos Entrante -->
-        <div id="voz-entrante-campos" class="space-y-2">
+        <!-- TODO: Mostrar solo si tipo === "Entrante" -->
+        <div id="campos-entrante" class="space-y-2 hidden">
           <input id="email" type="text" placeholder="Correo notificación" class="input input-bordered w-full" />
           <input id="caller_id" type="text" placeholder="DID / Caller ID" class="input input-bordered w-full" />
           <select id="estrategia" class="input input-bordered w-full">
@@ -70,8 +71,8 @@
           </select>
         </div>
 
-        <!-- Campos Saliente -->
-        <div id="voz-saliente-campos" class="space-y-2 hidden">
+        <!-- TODO: Mostrar solo si tipo === "Saliente" -->
+        <div id="campos-saliente" class="space-y-2 hidden">
           <input id="email2" type="text" placeholder="Correo notificación" class="input input-bordered w-full" />
           <input id="caller_id2" type="text" placeholder="DID / Caller ID" class="input input-bordered w-full" />
           <select id="estrategia2" class="input input-bordered w-full">
@@ -92,6 +93,9 @@
           <select id="espera_audio2" class="input input-bordered w-full">
             <option value="">Audio Espera</option>
           </select>
+          <select id="sip_trunk_select" class="input input-bordered w-full">
+            <option>Seleccionar SIP Trunk</option>
+          </select>
         </div>
 
         <!-- Campos Comunes -->
@@ -103,8 +107,8 @@
           </div>
         </div>
 
-        <!-- Campos WhatsApp -->
-        <div id="whatsapp-campos" class="space-y-2 hidden">
+        <!-- TODO: Mostrar solo si tipo === "WhatsApp" -->
+        <div id="campos-whatsapp" class="space-y-2 hidden">
           <select id="rompehielos" class="input input-bordered w-full">
             <option value="">Seleccionar Rompehielo</option>
           </select>
@@ -142,12 +146,6 @@
           </button>
         </div>
 
-        <!-- SIP Trunk -->
-        <div>
-          <select id="sip_trunk_select" class="input input-bordered w-full">
-            <option value="">Seleccionar SIP Trunk</option>
-          </select>
-        </div>
 
         <!-- Transferibles -->
         <div>
@@ -235,14 +233,6 @@
       cont.appendChild(div);
     }
 
-    // Mostrar/ocultar campos según tipo
-    document.getElementById('tipo').addEventListener('change', e => {
-      const t = e.target.value;
-      document.getElementById('voz-entrante-campos').classList.toggle('hidden', t!=='Entrante');
-      document.getElementById('voz-saliente-campos').classList.toggle('hidden', t!=='Saliente');
-      document.getElementById('voz-comunes').classList.toggle('hidden', t==='WhatsApp');
-      document.getElementById('whatsapp-campos').classList.toggle('hidden', t!=='WhatsApp');
-    });
   </script>
 
   <!-- Módulo de UI: enganchar eventos -->
