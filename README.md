@@ -1,52 +1,106 @@
-# Mini CRM
+# mini_crm
 
-Este proyecto es una pequeña aplicación CRM que utiliza Firebase para el hosting y las funciones en la nube.
+CRM Mini – Proyecto Omnicanal
 
-## Configuración de variables de entorno
+---
 
-Las funciones de Firebase requieren credenciales de Twilio para generar tokens de acceso. Para configurarlas ejecuta en la raíz del proyecto:
+## 📁 Estructura del Proyecto
 
-```bash
-firebase functions:config:set \
-  twilio.account_sid="ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
-  twilio.api_key="SKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
-  twilio.api_secret="<tu_api_secret>" \
-  twilio.app_sid="APXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-```
+mini_crm/
+├── frontend/ # Código fuente del frontend (HTML, CSS, JS, configs)
+│ ├── campanas/
+│ ├── chat/
+│ ├── data/
+│ ├── functions/
+│ ├── scripts/
+│ ├── styles/
+│ ├── telefonia/
+│ ├── usuarios/
+│ ├── .firebaserc
+│ ├── config.json
+│ ├── firebase.json
+│ ├── firestore.indexes.json
+│ ├── firestore.rules
+│ ├── index.html
+│ ├── layout.html
+│ ├── login.html
+│ ├── logo.png
+│ ├── README.md
+│ └── softphone.html
+│
+├── backend/ # Backend Express.js (API RESTful, PostgreSQL)
+│ ├── .env
+│ ├── index.js
+│ ├── db.js
+│ ├── package.json
+│ └── routes/
+│ ├── campanas.js
+│ ├── extensiones.js
+│ ├── llamadas.js
+│ ├── contactos.js
+│ └── asignaciones.js
+│
+└── .gitignore
 
-Puedes verificar que se guardaron correctamente con:
+yaml
+Copiar
+Editar
 
-```bash
-firebase functions:config:get
-```
+---
 
-## Despliegue de funciones y hosting
+## 🚀 ¿Cómo correr el proyecto?
 
-1. Instala las dependencias del proyecto de funciones:
+### 1. **Frontend**
+- **Abre `/frontend/index.html`** directamente o sirve la carpeta con un servidor local (ej: [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) de VSCode).
+- Toda la lógica y archivos legacy siguen aquí.
 
-```bash
-cd functions
-npm install
-cd ..
-```
+### 2. **Backend**
+- Ve a la carpeta `/backend`:
+    ```bash
+    cd backend
+    npm install
+    ```
+- Crea el archivo `.env` con tu conexión a PostgreSQL:
+    ```
+    DATABASE_URL=postgresql://postgres:TU_PASSWORD@localhost:5432/mini_crm
+    PORT=4000
+    ```
+- Levanta el backend:
+    ```bash
+    node index.js
+    ```
+- Los endpoints estarán en:  
+  `http://localhost:4000/api/...`
 
-2. Inicia sesión en Firebase y selecciona el proyecto correspondiente si es necesario:
+### 3. **Conexión Frontend-Backend**
+- Los scripts JS del frontend (en `/scripts/`) ahora deben consumir los endpoints del backend REST para campañas, llamadas, contactos y usuarios.
+- Firebase solo para login, chat y archivos.
 
-```bash
-firebase login
-firebase use --add
-```
+---
 
-3. Despliega las funciones de Cloud Functions:
+## 🔧 Tecnologías Usadas
 
-```bash
-firebase deploy --only functions
-```
+- **Frontend:** HTML5, CSS3, JS (Vanilla)
+- **Backend:** Node.js, Express.js, PostgreSQL
+- **Auth y Realtime:** Firebase (Auth, Storage, RealtimeDB)
+- **Infraestructura:** Modular, escalable y preparada para integración Asterisk
 
-4. Despliega la aplicación web en Firebase Hosting:
+---
 
-```bash
-firebase deploy --only hosting
-```
+## 📝 Notas y ToDo
 
-Con esto tendrás la aplicación y las funciones disponibles en tu proyecto de Firebase.
+- Migrar lógica de campañas/contactos/llamadas de Firestore a API REST (Express)
+- Mantener Firebase solo para login, chat, adjuntos
+- Dejar estructura lista para pruebas con Asterisk, reporting y Looker Studio
+- Documentar rutas backend y endpoints
+
+---
+
+## ✨ Contribuciones
+
+Súmate a mejorar este CRM mini, cualquier PR o issue es bienvenido.  
+Para dudas técnicas, revisa la carpeta `/backend/routes/` y los scripts de `/frontend/scripts/`.
+
+---
+
+*Powered by EL GOD FAR & ChatGPT. No te rindas, que el CRM no se va a migrar solo… ¡pero aquí tienes el mapa! 🚀*
